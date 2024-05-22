@@ -1,50 +1,27 @@
-package org.launchcode.hellospring.controllers;
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.1'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+group = 'org.launchcode'
+version = '0.0.1-SNAPSHOT'
 
-@Controller
-public class HelloController {
-	//handle request at path http://localhost:8080/hello
+java {
+	sourceCompatibility = '17'
+}
 
-//    @GetMapping("hello")
-//    @ResponseBody
-//    public String hello(){
-//        return "Hello, Spring!";
-//    }
+repositories {
+	mavenCentral()
+}
 
-	//handle request at path //http://localhost:8080/goodbye
-	@GetMapping("goodbye")
-	@ResponseBody
-	public String goodbye(){
-		return "Goodbye, Spring!";
-	}
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
 
-	//handle requests of the form http://localhost:8080/hello?name=LaunchCode
-	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "hello")
-	@ResponseBody
-	public String helloWithQueryParam(@RequestParam String name){
-		return "Hello, " + name + "!";
-	}
-
-	//handle requests of the form http://localhost:8080/hello/LaunchCode
-	@GetMapping("hello/{name}")
-	@ResponseBody
-	public String helloWithPathParam(@PathVariable String name){
-		return "Hello, " + name + "!";
-	}
-
-	@GetMapping("form")
-	@ResponseBody
-	public String helloForm() {
-		return "<html>" +
-				"<body>" +
-				"<form action = 'hello' method = 'post'>" + // submit a request to /hello
-				"<input type = 'text' name = 'name' >" +
-				"<input type = 'submit' value = 'Greet Me!' >" +
-				"</form>" +
-				"</body>" +
-				"</html>";
-	}
-
+tasks.named('test') {
+	useJUnitPlatform()
 }
